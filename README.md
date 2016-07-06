@@ -181,7 +181,7 @@ dd if=/home/username/Downloads/openwrt-brcm2708-bcm2709-sdcard-vfat-ext4.img of=
 
 Donde el Sdx es la ubicación donde se encuentra montado la tarjeta SD
 
-Se debe utilizar todas las configuraciones del capítulo III
+Se debe utilizar todas las configuraciones de la sección anterior
 
 Dado que la Raspberry Pi cuenta con recursos limitados, se debe modificar el parámetro RX del Scheduler dentro del Firmware de OpenWSN ubicado en openwsn-fw/openstack/schedule.h y modificar NUMSERIALRX 3,  por NUMSERIALRX 5. Se debe recompilar el nuevo firmware a todos los motes que se utilizarán para trabajar.
 
