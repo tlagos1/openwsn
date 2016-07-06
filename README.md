@@ -15,17 +15,17 @@ Los OpenMotes son dispositivos, los cuales se componen de las siguientes piezas 
 
 	<img src="https://github.com/tlagos1/openwsn/blob/master/img/openbase.jpg" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="200" />
 
-Los dispositivos OpenMote-CC2538 tendrán instalados el firmware OpenWsn, el cual está elaborado para fines experimentales.
+Los dispositivos OpenMote-CC2538 tendrán instalados el firmware OpenWSN, el cual está elaborado para fines experimentales.
 
-En este informe se explica, cómo se realiza la instalación del OpeWsn dentro de un OpenMode, como lograr su funcionamiento dentro de un equipo con OpenWrt incorporado y realizar una comunicación ICMP entre los Motes existentes hacia el OpenWrt y de este hacia un equipo.
+En este informe se explica, cómo se realiza la instalación del OpeWSN dentro de un OpenMode, como lograr su funcionamiento dentro de un equipo con OpenWRT incorporado y realizar una comunicación ICMP entre los Motes existentes hacia el OpenWRT y de este hacia un equipo.
 
 ### Instalación del OpenWSN dentro del OpenMote
-Para la instalación del OpenWsn se utilizará la guía https://openwsn.atlassian.net/wiki/display/OW/Kickstart+Linux.
+Para la instalación del OpenWSN se utilizará la guía https://openwsn.atlassian.net/wiki/display/OW/Kickstart+Linux.
 
 El primer paso para la instalación del OpenWsn, es la descarga de los proyectos:
 
-  * OpenWsn-Sw: Se encuentran todos los softwares para iniciar OpenWsn.
-  * OpenWsn-fw: Se encuentran los firmwares compilados de OpenWsn.
+  * OpenWsn-Sw: Se encuentran todos los softwares para iniciar OpenWSN.
+  * OpenWsn-fw: Se encuentran los firmwares compilados de OpenWSN.
   
 Con los siguientes comandos:
 ```
@@ -56,7 +56,7 @@ De esta manera solo queda insertar los siguientes códigos:
 Cabe mencionar que el parámetro bootload debe referirse a la dirección del puerto serial. En este caso ttyUSB0.
 Esto debe repetirse con todos los motes con los que se quiere trabajarán.
 
-El siguiente paso, es correr el OpenWsn bajo el software openVisualizerWeb. Para efectuarlo se requiere utilizar los siguiente Comandos:
+El siguiente paso, es correr el OpenWSN bajo el software openVisualizerWeb. Para efectuarlo se requiere utilizar los siguiente Comandos:
 
 ```
 ~$ cd openwsn-sw/software/openvisualizer/
@@ -73,10 +73,10 @@ Se selecciona el mote y se incorpora como DAG Root
 ![img](https://github.com/tlagos1/openwsn/blob/master/img/dagroot.png)
 
 
-### Configuración de OpenWrt para la comunicación de OpenWSN  
+### Configuración de OpenWRT para la comunicación de OpenWSN  
  Esta configuración se realizó con el firmware de Openwrt Chaos Calmer 15.05.1
   
- El primer paso es la instalación de las siguientes paquetes y dependencias de python.
+ El primer paso es la instalación de las siguientes paquetes y dependencias de Python.
 ```
 ~$ opkg update
 ~$ opkg install python-light
@@ -99,7 +99,7 @@ Y la instalación de las dependencias serial usb y tun con los siguientes comand
 ~$ opkg install kmod-tun
 ```
 
-Ya teniendo los driver y softwares necesarios se emplea la configuración Network de openwrt, el cual se encuentra ubicado en /etc/config/network. 
+Ya teniendo los driver y softwares necesarios se emplea la configuración Network de OpenWRT, el cual se encuentra ubicado en /etc/config/network. 
 
 El archivo debe considerar los siguientes parámetros:
 ```
@@ -120,7 +120,7 @@ config interface 'openwsn'
         option ip6assign '64'
         option ip6addr  'bbbb::1/64'
 ```
-Donde la interfaz Lan se le asignará la IPv6 aaaa::1. Ademas se genera la creación de la interfaz Openwn, que poseerá la entrada tun0 del puerto serial y las IPv6 bbbb::1, dado que OpenWsn trabaja con ellas.
+Donde la interfaz Lan se le asignará la IPv6 aaaa::1. Además se genera la creación de la interfaz OpenWSN, que poseerá la entrada tun0 del puerto serial y las IPv6 bbbb::1, dado que OpenWSN trabaja con ellas.
 
 El siguiente paso, es la configuración del archivo firewall, el cual se encuentra ubicado en la dirección /etc/config/firewall. Se considerarán los siguientes parámetros para su configuración:
 ```
@@ -168,13 +168,13 @@ config forwarding
 ```
 Se observa la creación de los cofig zone, y de los config forwarding además de la modificación del "rule" con los "option src '*' "  y "dest '*' "
 
-Cabe señalar que para la utilización del OpenWsn se debe incorporar la carpeta openwsn-sw dentro de la carpeta /root/
+Cabe señalar que para la utilización del OpenWSN se debe incorporar la carpeta openwsn-sw dentro de la carpeta /root/
 
-### Instalación de OpenWrt dentro de una Raspberry Pi 2 y la configuración del firmware OpenWsn para su funcionamiento
-El firmware disponible para la raspberry pi para OpenWrt se encuentra en el siguiente link:
+### Instalación de OpenWRT dentro de una Raspberry Pi 2 y la configuración del firmware OpenWSN para su funcionamiento
+El firmware disponible para la Raspberry Pi para OpenWRT se encuentra en el siguiente link:
 http://downloads.openwrt.org/chaos\_calmer/15.05.1/brcm2708/bcm2709/
 
-Para poder instalar el firmware a la Paspberry Pi 2, se debe ingresar la tarjeta SD dentro del equipo. Luego se utiliza el siguiente comando:
+Para poder instalar el firmware a la Raspberry Pi 2, se debe ingresar la tarjeta SD dentro del equipo. Luego se utiliza el siguiente comando:
 ```
 dd if=/home/username/Downloads/openwrt-brcm2708-bcm2709-sdcard-vfat-ext4.img of=/dev/sdX bs=2M conv=fsync
 ```
@@ -183,11 +183,10 @@ Donde el Sdx es la ubicación donde se encuentra montado la tarjeta SD
 
 Se debe utilizar todas las configuraciones del capítulo III
 
-Dado que la Raspberry cuenta con recursos limitados, se debe modificar el parámetro RX del Schedule dentro del Firmware de OpenWsn ubicado en openwsn-fw/openstack/schedule.h y modificar NUMSERIALRX 3,  por NUMSERIALRX 5. Se debe recompilar el nuevo firmware a todos los motes que se utilizarán para trabajar.
+Dado que la Raspberry Pi cuenta con recursos limitados, se debe modificar el parámetro RX del Scheduler dentro del Firmware de OpenWSN ubicado en openwsn-fw/openstack/schedule.h y modificar NUMSERIALRX 3,  por NUMSERIALRX 5. Se debe recompilar el nuevo firmware a todos los motes que se utilizarán para trabajar.
 
-### Comunicación entre un equipo a un mote entremedio de OpenWrt
-Para generar la comnicación entre un equipo a un mote, la raspberry debera estar conectada mediante el cable serial USB hacia el Openbase y el puerto ethernet a el puerto ethernet del equipo. De esta manera la Raspberry funcionara como router entre los dos equipos.
+### Comunicación entre un equipo a un mote entremedio de OpenWRT
+Para generar la comunicación entre un equipo a un mote, la raspberry Pi deberá estar conectada mediante el cable serial USB hacia el OpenBase y el puerto ethernet a el puerto ethernet del equipo. De esta manera la Raspberry Pi funcionara como router entre los dos equipos.
 
 
-Para ver la interacción entre los equipos, se genera un ping con un header de 10 bits hacia cualquera de los distintos motes que existen, exceptuando el Mote conectado al Openbase.   
-
+Para ver la interacción entre los equipos, se genera un ping con un header de 10 bits hacia cualquiera de los distintos motes que existen, exceptuando el Mote conectado al OpenBase.   
