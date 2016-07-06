@@ -4,28 +4,17 @@
 Los OpenMotes son dispositivos, los cuales se componen de las siguientes piezas que se muestran a continuación:
 
 * OpenMote-CC2538: El openMote-CC2538 es el núcleo del hardware el cual contiene el firmware OpenWsn. Este posee un conector de antena y un chip de sistema CC2538 entre otros.
-        \begin{figure}[!ht]
-			\begin{center}
-			\includegraphics[scale=0.5]{motecc2538.jpg}
-			\end{center}			            
-			\caption{OpenMote-CC2538.}        
-        \end{figure}
+
+	<img src="https://github.com/tlagos1/openwsn/blob/master/img/motecc2538.jpg" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="200" />
         
 * OpenBattery: El OpenBattery es la plataforma que le entrega energía al OpenMote-CC2538. Este tiene dos entradas para pilas AAA. Además de tres sensores, los cuales son de humedad y temperatura, aceleración y de luz.
-        \begin{figure}[!ht]
-			\begin{center}
-			\includegraphics[scale=0.3]{openbattery.jpg}
-			\end{center}			            
-			\caption{OpenBattery.}        
-        \end{figure}
+
+	<img src="https://github.com/tlagos1/openwsn/blob/master/img/openbattery.jpg" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="200" />
+
 * OpenBase: El OpenBase es la plataforma que permite la comunicación de los motes existentes con el equipo.
-        \begin{figure}[!ht]
-			\begin{center}
-			\includegraphics[scale=0.23]{openbase.jpg}
-			\end{center}			            
-			\caption{OpenBase.}        
-        \end{figure}   
-\end{itemize}
+
+	<img src="https://github.com/tlagos1/openwsn/blob/master/img/openbase.jpg" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="200" />
+
 Los dispositivos OpenMote-CC2538 tendrán instalados el firmware OpenWsn, el cual está elaborado para fines experimentales.
 
 En este informe se explica, cómo se realiza la instalación del OpeWsn dentro de un OpenMode, como lograr su funcionamiento dentro de un equipo con OpenWrt incorporado y realizar una comunicación ICMP entre los Motes existentes hacia el OpenWrt y de este hacia un equipo.
@@ -55,12 +44,9 @@ Ademas de los paquetes adicionales que se muestran a continuación:
 ~$ sudo apt-get install scons
 ```
 Ya teniendo los pre-requisitos instalados, se emplea a la compilación del firmware. Para lograr esto, se debe dejar el OpenMote en estado BootLoader y para luego compilar el firmware. Para entrar al estado Bootloader se debe conectar el OpenMote-CC2538 al OpenBase y luego conectar el pin On/Sleep con el pin GND. 
-\begin{figure}[!h]
-	\begin{center}
-		\includegraphics[scale=0.05]{bootloader.jpg}
-	\end{center}			            
-	\caption{OpenBase.}        
-\end{figure}
+
+![img](https://github.com/tlagos1/openwsn/blob/master/img/bootloader.jpg)
+
 
 De esta manera solo queda insertar los siguientes códigos:
 ```
@@ -80,22 +66,12 @@ El siguiente paso, es correr el OpenWsn bajo el software openVisualizerWeb. Para
 
 Luego se accede a la url http://localhost:8080 donde se visualizará la siguiente página.
 
-\begin{figure}[!ht]
-	\begin{center}
-		\includegraphics[scale=0.13]{openweb.png}
-	\end{center}			            
-	\caption{OpenVisualizerWeb}        
-\end{figure}
-\newpage
+![img](https://github.com/tlagos1/openwsn/blob/master/img/openweb.png)
 
 Se selecciona el mote y se incorpora como DAG Root
 
-\begin{figure}[!ht]
-	\begin{center}
-		\includegraphics[scale=0.45]{dagroot.png}
-	\end{center}			            
-	\caption{DAGroot}        
-\end{figure}  
+![img](https://github.com/tlagos1/openwsn/blob/master/img/dagroot.png)
+
 
 ### Configuración de OpenWrt para la comunicación de OpenWSN  
  Esta configuración se realizó con el firmware de Openwrt Chaos Calmer 15.05.1
@@ -190,7 +166,7 @@ config forwarding
         option dest 'lan'
         option src 'openwsn'
 ```
-Se observa la creación de los cofig zone, y de los config forwarding además de la modificación del ``rule'' con los ``option src '*' '' y ``dest '*' ''
+Se observa la creación de los cofig zone, y de los config forwarding además de la modificación del "rule" con los "option src '*' "  y "dest '*' "
 
 Cabe señalar que para la utilización del OpenWsn se debe incorporar la carpeta openwsn-sw dentro de la carpeta /root/
 
@@ -208,7 +184,8 @@ Donde el Sdx es la ubicación donde se encuentra montado la tarjeta SD
 Se debe utilizar todas las configuraciones del capítulo III
 
 Dado que la Raspberry cuenta con recursos limitados, se debe modificar el parámetro RX del Schedule dentro del Firmware de OpenWsn ubicado en openwsn-fw/openstack/schedule.h y modificar NUMSERIALRX 3,  por NUMSERIALRX 5. Se debe recompilar el nuevo firmware a todos los motes que se utilizarán para trabajar.
-\section{Comunicación entre un equipo a un mote entremedio de OpenWrt}
+
+### Comunicación entre un equipo a un mote entremedio de OpenWrt
 Para generar la comnicación entre un equipo a un mote, la raspberry debera estar conectada mediante el cable serial USB hacia el Openbase y el puerto ethernet a el puerto ethernet del equipo. De esta manera la Raspberry funcionara como router entre los dos equipos.
 
 
